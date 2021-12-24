@@ -15,12 +15,23 @@
 
 import worker from '@ohos.worker';
 import {Constants} from '../common/Constants'
+import {log} from '../workers/log_utils'
 export class WorkerManager {
     private static instance: WorkerManager;
     private cocosWorker: any;
 
     private constructor() {
         this.cocosWorker = new worker.Worker("workers/cocos_worker.ts", {type:"classic", name: "CocosWorker"});
+        log('new worker');
+        this.cocosWorker.on('WorkerLoad', () => {
+            log('on worker loaded')
+        })
+        this.cocosWorker.onmessage = function(e) {
+            console.log("worker onmessage")
+        }
+        log('new worker2');
+
+
     }
 
     public static getInstance(): WorkerManager {

@@ -3,6 +3,7 @@ import nativerender from "libcocos2d.so";
 
 import { WorkerManager } from '../cocos/WorkerManager.ets'
 import { ContextType } from "../common/Constants"
+import {log} from '../workers/log_utils'
 
 const nativePageLifecycle = nativerender.getContext(ContextType.JSPAGE_LIFECYCLE);
 

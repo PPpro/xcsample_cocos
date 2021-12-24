@@ -17,8 +17,10 @@ import worker from '@ohos.worker';
 import nativerender from "libcocos2d.so";
 import { ContextType } from "../common/Constants.ts"
 import '../assets/main.js'
+import { log } from './log_utils';
+import { launchEngine } from './game'
 
-declare var require:any;
+import "./src/system.bundle.615d0.js";
 
 console.log("cocos worker: New Worker Thread")
 
@@ -71,11 +73,11 @@ parentPort.onmessage = function(e) {
             break;
         case "onXCLoad":
             console.log("kee cocos worker: onXCLoad");
-            if (require) {
-                require("./game.ts");
-                console.log("kee cocos worker napi init ok" + require);
-            }
+            launchEngine();
+            console.log("kee cocos worker napi init ok");
             console.log(data.data);
+            log('worker post msg')
+            parentPort.postMessage({type: "WorkerLoad", data: "XComponent"})
             break;
         case "render":
             console.log("kee cocos worker: render");
