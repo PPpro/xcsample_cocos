@@ -16,6 +16,8 @@
 import worker from '@ohos.worker';
 import nativerender from "libcocos2d.so";
 import { ContextType } from "../common/Constants.ts"
+import '../assets/main.js'
+
 declare var require:any;
 
 console.log("cocos worker: New Worker Thread")
