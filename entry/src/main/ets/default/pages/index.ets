@@ -54,9 +54,14 @@ struct Index {
 
       XComponent({ id: 'xcomponentId', type: 'surface', libraryname: 'cocos2d', source: 'application'})
         .onLoad((context) => {
-          console.log('kee cocos xcomponent onLoad');
-          this.context = context;
-          this.cocosWorker.postMessage({type: "onXCLoad", data: "XComponent"});
+          // HACK: delay to post massage to wait for worker launching.
+          setTimeout(() => {
+            log('post msg when XCLoad');
+            console.log('kee cocos xcomponent onLoad');
+            this.context = context;
+            this.cocosWorker.postMessage({type: "onXCLoad", data: "XComponent"});
+          }, 500)
+
         })
         .onDestroy(() => {
           console.log('kee cocos onDestroy')

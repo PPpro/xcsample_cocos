@@ -12,31 +12,56 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { log } from './log_utils'
+import { importMap } from './src/import-map.1b3be'
 
-console.log("kee cocos Game JS")
-declare var jsb:any;
-declare var window:any;
+declare const require: any;
+declare let System: any;
 
-if (jsb) {
-    console.log("kee cocos Game napi init ok" + Object.keys(jsb));
-}else {
-    console.log("kee cocos Game napi init fail");
+export function launchEngine (): Promise<void> {
+    return new Promise((resolve, reject) => {
+        try {
+            System.warmup({
+                importMap,
+                importMapUrl: 'src/import-map.1b3be.json',
+                defaultHandler: (urlNoSchema: string) => {
+                    require(urlNoSchema.startsWith('/') ? urlNoSchema.substr(1) : urlNoSchema);
+                },
+            });
+            System.import('./src/application.79b93.js').then(({ createApplication }) => {
+                log('imported')
+            })
+
+
+            resolve();
+//            System.import('./src/application.79b93.js').then(({ createApplication }) => {
+//                return createApplication({
+//                    loadJsListFile: (url) => require(url),
+//                    fetchWasm: (url) => url,
+//                });
+//            })
+//            .then((application) => {
+//            return application.import('cc').then((cc) => {
+//                require('jsb-adapter/jsb-engine.js');
+//                cc.macro.CLEANUP_IMAGE_CACHE = false;
+//            }).then(() => {
+//                return application.start({
+//                    settings: window._CCSettings,
+//                    findCanvas: () => {
+//                        var container = document.createElement('div');
+//                        var frame = document.documentElement;
+//                        var canvas = window.__canvas;
+//                        return { frame, canvas, container };
+//                    },
+//                });
+//            });
+//            }).catch((err) => {
+//                console.error(err.toString());
+//            });
+        } catch (e) {
+            reject(e);
+        }
+    });
 }
 
-if (window) {
-    console.log("kee cocos Game napi window init ok" + Object.keys(window));
-    if (window.windowHandler) {
-        console.log("kee cocos Game napi window innerWidth : " + window.windowHandler);
-    }
-}else {
-    console.log("kee cocos Game napi window init fail");
-}
 
-export class Game {
-    constructor() {
-        console.log("kee cocos Game constructor")
-    }
-    public runGame(): void {
-        console.log("kee cocos Game run")
-    }
-}

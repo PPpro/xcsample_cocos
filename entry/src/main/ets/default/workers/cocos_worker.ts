@@ -72,12 +72,16 @@ parentPort.onmessage = function(e) {
             }
             break;
         case "onXCLoad":
+            log('recieve msg from host XCLoad');
+            log('start to launch CC engine');
             console.log("kee cocos worker: onXCLoad");
-            launchEngine();
+            launchEngine().then(() => {
+                log('launch CC engien finished');
+            }).catch(e => {
+                log('launch CC engien failed');
+            });
             console.log("kee cocos worker napi init ok");
             console.log(data.data);
-            log('worker post msg')
-            parentPort.postMessage({type: "WorkerLoad", data: "XComponent"})
             break;
         case "render":
             console.log("kee cocos worker: render");
