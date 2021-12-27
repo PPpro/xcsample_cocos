@@ -4,9 +4,9 @@
 - 引入 SystemJS
 
 # Key Result
-1. 跑通 application 流程
-2. 
-3.
-4. 
-5. 渲染第一个画面
+1. 跑通 SystemJS 模块系统， 跑通 application 流程
+2. 跑通原生渲染框架
+3. 渲染第一个画面
+4. 交付反馈
+5. 处理反馈
  

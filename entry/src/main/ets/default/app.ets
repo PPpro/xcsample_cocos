@@ -1,6 +1,10 @@
 import nativerender from "libcocos2d.so";
 import { ContextType } from "./common/Constants"
 import { WorkerManager } from './cocos/WorkerManager.ets'
+import {log} from './workers/log_utils'
+
+
+log('===========================================')
 
 const nativeAppLifecycle = nativerender.getContext(ContextType.APP_LIFECYCLE);
 export default {
