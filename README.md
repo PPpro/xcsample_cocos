@@ -3,7 +3,7 @@
 - 尽量使用 .ts 文件
 - 引入 SystemJS
 
-# Key Result
+# 2021.12.27 - 2021.12.31 Key Result
 1. 跑通 SystemJS 模块系统， 跑通 application 流程
 2. 跑通原生渲染框架
 3. 渲染第一个画面
