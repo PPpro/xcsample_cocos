@@ -16,24 +16,68 @@ import { log } from './log_utils'
 import { importMap } from './src/import-map.1b3be'
 
 declare const require: any;
-declare let System: any;
+declare const System: any;
+
+// TODO: CommonJS Module Mapping
+const commonJSModuleMap: Record<string, Function> = {
+    '/src/application.79b93.js' () { require('./src/application.79b93.js'); },
+    '/src/cocos-js/cc.494d9.js' () { require('./src/cocos-js/cc.494d9.js'); },
+}
+function loadModule (name: string) {
+    const moduleExecutor = commonJSModuleMap[name];
+    moduleExecutor?.();
+}
 
 export function launchEngine (): Promise<void> {
     return new Promise((resolve, reject) => {
         try {
-            System.warmup({
-                importMap,
-                importMapUrl: 'src/import-map.1b3be.json',
-                defaultHandler: (urlNoSchema: string) => {
-                    require(urlNoSchema.startsWith('/') ? urlNoSchema.substr(1) : urlNoSchema);
-                },
+            require("./jsb-adapter/jsb-builtin.js");
+
+        } catch (e) {
+            log('error builtin', e.stack, e.message)
+        }
+
+
+        require("./src/system.bundle.615d0.js");
+        System.warmup({
+            importMap,
+            importMapUrl: './src/import-map.1b3be.ts',
+            defaultHandler: (urlNoSchema: string) => {
+                log('urlNoSchema ', urlNoSchema);
+                loadModule(urlNoSchema);
+            },
+        });
+        System.import('./src/application.79b93.js').then(({ createApplication }) => {
+            log('imported createApplication', createApplication)
+            return createApplication({
+                loadJsListFile: (url: string) => require(url),
+                fetchWasm: (url: string) => url,
+            }).then((application) => {
+                log('created application', application)
+                return application.import('cc').then((cc) => {
+                    log('importing cc');
+                    require('./jsb-adapter/jsb-engine.js');
+                    cc.macro.CLEANUP_IMAGE_CACHE = false;
+                }).then(() => {
+                    log('start application');
+                    return application.start({
+                        // @ts-ignore
+                        settings: window._CCSettings,
+                        findCanvas: () => {
+                            //                                var container = document.createElement('div');
+                            //                                var frame = document.documentElement;
+                            //                                var canvas = window.__canvas;
+                            return { frame: {}, canvas: {}, container: {} };
+                        },
+                    });
+                });
             });
-            System.import('./src/application.79b93.js').then(({ createApplication }) => {
-                log('imported')
-            })
+        }).catch((e: any) => {
+            log('imported failed', e.message, e.stack)
+            reject(e);
+        })
 
 
-            resolve();
 //            System.import('./src/application.79b93.js').then(({ createApplication }) => {
 //                return createApplication({
 //                    loadJsListFile: (url) => require(url),
@@ -58,9 +102,6 @@ export function launchEngine (): Promise<void> {
 //            }).catch((err) => {
 //                console.error(err.toString());
 //            });
-        } catch (e) {
-            reject(e);
-        }
     });
 }
 
