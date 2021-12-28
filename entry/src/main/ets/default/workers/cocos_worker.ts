@@ -20,8 +20,6 @@ import '../assets/main.js'
 import { log } from './log_utils';
 import { launchEngine } from './game'
 
-import "./src/system.bundle.615d0.js";
-
 console.log("cocos worker: New Worker Thread")
 
 const nativeContext = nativerender.getContext(ContextType.WORKER_INIT);
@@ -74,6 +72,8 @@ parentPort.onmessage = function(e) {
         case "onXCLoad":
             log('recieve msg from host XCLoad');
             log('start to launch CC engine');
+            const renderContext = nativerender.getContext(ContextType.NATIVE_RENDER_API);
+            renderContext.loadSurface();
             console.log("kee cocos worker: onXCLoad");
             launchEngine().then(() => {
                 log('launch CC engien finished');
