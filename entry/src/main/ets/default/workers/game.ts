@@ -64,10 +64,8 @@ export function launchEngine (): Promise<void> {
                             // @ts-ignore
                             settings: window._CCSettings,
                             findCanvas: () => {
-                                //                                var container = document.createElement('div');
-                                //                                var frame = document.documentElement;
-                                //                                var canvas = window.__canvas;
-                                return { frame: {}, canvas: {}, container: {} };
+                                // @ts-ignore
+                                return { frame: {}, canvas: window.windowHandler, container: {} };
                             },
                         });
                     });
