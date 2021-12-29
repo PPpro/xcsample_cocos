@@ -1,7 +1,6 @@
 # 第一阶段目标
 - 减少文件读写
-- 尽量使用 .ts 文件
-- 引入 SystemJS
+- 渲染 Cocos Splash Screen
 
 # 2021.12.27 - 2021.12.31 Key Result
 1. 跑通 SystemJS 模块系统， 跑通 application 流程
