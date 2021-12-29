@@ -65,6 +65,8 @@ export function launchEngine (): Promise<void> {
                             settings: window._CCSettings,
                             findCanvas: () => {
                                 // @ts-ignore
+                                log('typeof windowHandler ', typeof window.windowHandler, window.windowHandler)
+                                // @ts-ignore
                                 return { frame: {}, canvas: window.windowHandler, container: {} };
                             },
                         });
