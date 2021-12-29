@@ -2574,9 +2574,10 @@ cc.assetManager.transformPipeline.append(function (task) {
 var originInit = cc.assetManager.init;
 
 cc.assetManager.init = function (options) {
-  originInit.call(cc.assetManager, options);
-  initJsbDownloader(options.jsbDownloaderMaxTasks, options.jsbDownloaderTimeout);
-  cacheManager.init();
+    // TODO: assetManager not supported
+//  originInit.call(cc.assetManager, options);
+//  initJsbDownloader(options.jsbDownloaderMaxTasks, options.jsbDownloaderTimeout);
+//  cacheManager.init();
 };
 
 },{"./jsb-cache-manager":4,"./jsb-fs-utils":8}],12:[function(require,module,exports){

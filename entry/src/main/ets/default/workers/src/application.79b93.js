@@ -1,3 +1,5 @@
+import {log} from '../log_utils.ts'
+
 System.register([], function (_export, _context) {
   "use strict";
 
@@ -21,18 +23,23 @@ System.register([], function (_export, _context) {
       let cc;
       return Promise.resolve().then(() => topLevelImport('cc')).then(engine => {
         cc = engine;
+        log('load settings')
         return loadSettingsJson(cc);
       }).then(() => {
         settings = window._CCSettings;
+        log('initializeGame')
         return initializeGame(cc, settings, findCanvas).then(() => {
           if (!settings.renderPipeline) return cc.game.run();
         }).then(() => {
+          log('loadModulePacks')
           if (settings.scriptPackages) {
             return loadModulePacks(settings.scriptPackages);
           }
         }).then(() => loadJsList(settings.jsList)).then(() => loadAssetBundle(settings.hasResourcesBundle, settings.hasStartSceneBundle)).then(() => {
+          log('cc.game.run')
           if (settings.renderPipeline) return cc.game.run();
         }).then(() => {
+          log('onGameStarted')
           cc.game.onStart = onGameStarted.bind(null, cc, settings);
           onGameStarted(cc, settings);
         });
@@ -84,45 +91,46 @@ System.register([], function (_export, _context) {
     }
 
     function loadSettingsJson(cc) {
-      let settings = 'src/settings.1f1ec.json';
-      return new Promise((resolve, reject) => {
-        if (typeof fsUtils !== 'undefined' && !settings.startsWith('http')) {
-          let result = fsUtils.readJsonSync(settings);
+      window._CCSettings = require('./settings.js')
+    //  let settings = 'src/settings.1f1ec.json';
+    //  return new Promise((resolve, reject) => {
+    //    if (typeof fsUtils !== 'undefined' && !settings.startsWith('http')) {
+    //      let result = fsUtils.readJsonSync(settings);
 
-          if (result instanceof Error) {
-            reject(result);
-          } else {
-            window._CCSettings = result;
-            resolve();
-          }
-        } else {
-          let retryCount = 3;
-          const retryInterval = 2000;
+    //      if (result instanceof Error) {
+    //        reject(result);
+    //      } else {
+    //        window._CCSettings = result;
+    //        resolve();
+    //      }
+    //    } else {
+    //      let retryCount = 3;
+    //      const retryInterval = 2000;
 
-          function requestSettings() {
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', settings);
-            xhr.responseType = 'text';
+    //      function requestSettings() {
+    //        let xhr = new XMLHttpRequest();
+    //        xhr.open('GET', settings);
+    //        xhr.responseType = 'text';
 
-            xhr.onload = () => {
-              window._CCSettings = JSON.parse(xhr.response);
-              resolve();
-            };
+    //        xhr.onload = () => {
+    //          window._CCSettings = JSON.parse(xhr.response);
+    //          resolve();
+    //        };
 
-            xhr.onerror = () => {
-              if (retryCount-- > 0) {
-                setTimeout(requestSettings, retryInterval);
-              } else {
-                reject(new Error('request settings failed!'));
-              }
-            };
+    //        xhr.onerror = () => {
+    //          if (retryCount-- > 0) {
+    //            setTimeout(requestSettings, retryInterval);
+    //          } else {
+    //            reject(new Error('request settings failed!'));
+    //          }
+    //        };
 
-            xhr.send(null);
-          }
+    //        xhr.send(null);
+    //      }
 
-          requestSettings();
-        }
-      });
+    //      requestSettings();
+    //     }
+    //   });
     }
   }
 
@@ -134,8 +142,10 @@ System.register([], function (_export, _context) {
     }
 
     const gameOptions = getGameOptions(cc, settings, findCanvas);
+    log('test1')
     const success = cc.game.init(gameOptions);
 
+    log('test2')
     try {
       if (settings.customLayers) {
         settings.customLayers.forEach(layer => {

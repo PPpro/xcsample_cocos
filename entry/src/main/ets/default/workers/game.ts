@@ -30,11 +30,11 @@ function loadModule (name: string) {
 
 export function launchEngine (): Promise<void> {
     return new Promise((resolve, reject) => {
+        require('./jsb-adapter/sys-ability-polyfill.js');
         try {
             require("./jsb-adapter/jsb-builtin.js");
-
         } catch (e) {
-            log('error builtin', e.stack, e.message)
+            log('error in builtin ', e.stack, e.message);
         }
 
 

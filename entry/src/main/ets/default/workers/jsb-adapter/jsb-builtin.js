@@ -537,8 +537,6 @@ exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate :
 },{}],5:[function(require,module,exports){
 "use strict";
 
-jsb.device = jsb.Device; // cc namespace will be reset to {} in creator, use jsb namespace instead.
-
 const {
   btoa,
   atob
