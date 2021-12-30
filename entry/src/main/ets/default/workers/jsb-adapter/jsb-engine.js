@@ -1994,6 +1994,7 @@ deviceProto.copyTexImagesToTexture = function (texImages, texture, regions) {
 const oldDeviceCreateSwapchainFunc = deviceProto.createSwapchain;
 
 deviceProto.createSwapchain = function (info) {
+  console.log('pptest jsb engine createSwapchain')
   info.windowHandle = window.windowHandler;
   return oldDeviceCreateSwapchainFunc.call(this, info);
 };
