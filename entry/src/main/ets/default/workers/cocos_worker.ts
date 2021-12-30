@@ -73,7 +73,7 @@ parentPort.onmessage = function(e) {
             log('recieve msg from host XCLoad');
             log('start to launch CC engine');
             const renderContext = nativerender.getContext(ContextType.NATIVE_RENDER_API);
-            renderContext.loadSurface();
+            renderContext.nativeEngineInit();
             console.log("kee cocos worker: onXCLoad");
             launchEngine().then(() => {
                 log('launch CC engien finished');
