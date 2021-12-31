@@ -29,6 +29,7 @@ System.register([], function (_export, _context) {
         settings = window._CCSettings;
         log('initializeGame')
         return initializeGame(cc, settings, findCanvas).then(() => {
+          log('game run')
           if (!settings.renderPipeline) return cc.game.run();
         }).then(() => {
           log('loadModulePacks')
@@ -155,6 +156,7 @@ System.register([], function (_export, _context) {
     } catch (error) {
       console.warn(error);
     }
+    log('test3', success)
 
     return success ? Promise.resolve(success) : Promise.reject();
   }
