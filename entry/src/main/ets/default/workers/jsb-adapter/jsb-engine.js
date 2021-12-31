@@ -3787,7 +3787,7 @@ function getDataView(idx) {
   let offset = 4; // reserved for block total length
 
   console.log('pptest begin trans3')
-    dataView.setBigUint64(startPos + offset, fn, isLittleEndian);
+    dataView.setBigUint64(startPos + offset, BigInt(fn), isLittleEndian);
     
   console.log('pptest begin trans4')
   offset += 8;
@@ -3798,7 +3798,7 @@ function getDataView(idx) {
     },
     writeBigUint64: value => {
       console.log('pptest begin trans5')
-      dataView.setBigUint64(startPos + offset, value, isLittleEndian);
+      dataView.setBigUint64(startPos + offset, BigInt(value), isLittleEndian);
       offset += 8;
     },
     commit: () => {
@@ -3814,7 +3814,7 @@ function getDataView(idx) {
     writePointer(e) {
       if (e) {
         console.log('pptest begin trans6')
-        dataView.setBigUint64(startPos + offset, e.__native_ptr__, isLittleEndian);
+        dataView.setBigUint64(startPos + offset, BigInt(e.__native_ptr__), isLittleEndian);
 
         if (refMap.indexOf(e) < 0) {
           refMap.push(e);
