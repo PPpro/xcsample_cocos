@@ -8,7 +8,11 @@ module.exports = function systemReady () {
         if (typeof jsb !== 'undefined') {
             let device = jsb.device = {};
             device.getDevicePixelRatio = function () { return 1; }
+            device.getDeviceOrientation = function () { return 0; }
+        }
 
+        if (typeof XMLHttpRequest === 'undefined') {
+            window.XMLHttpRequest = function () {}
         }
 
         display.getDefaultDisplay((err, data) => {

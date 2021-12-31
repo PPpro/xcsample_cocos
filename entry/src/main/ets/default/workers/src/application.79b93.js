@@ -29,7 +29,7 @@ System.register([], function (_export, _context) {
         settings = window._CCSettings;
         log('initializeGame')
         return initializeGame(cc, settings, findCanvas).then(() => {
-          log('game run')
+          log('game run', typeof settings.renderPipeline)
           if (!settings.renderPipeline) return cc.game.run();
         }).then(() => {
           log('loadModulePacks')

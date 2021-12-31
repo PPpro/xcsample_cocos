@@ -1939,7 +1939,9 @@ class HTMLImageElement extends HTMLElement {
   set src(src) {
     this._src = src;
     if (src === '') return;
+    console.log('pptest jsb loading Image')
     jsb.loadImage(src, info => {
+    console.log('pptest jsb loaded Image')
       if (!info) {
         this._data = null;
         var event = new Event('error');
