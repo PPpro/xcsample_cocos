@@ -3755,11 +3755,9 @@ function getDataView(idx) {
 }
 
   function beginTrans(fn, minBytes) {
-  console.log('pptest begin trans1')
   let dataView = getDataView(__fastMQInfo__[0]);
   let startPos = dataView.getUint32(0, isLittleEndian);
   let commands = dataView.getUint32(4, isLittleEndian);
-  console.log('pptest begin trans2')
 
   if (__fastMQInfo__[0] === 0 && commands === 0) {
     // reset all reference at begining
@@ -3786,10 +3784,8 @@ function getDataView(idx) {
 
   let offset = 4; // reserved for block total length
 
-  console.log('pptest begin trans3')
     dataView.setBigUint64(startPos + offset, BigInt(fn), isLittleEndian);
     
-  console.log('pptest begin trans4')
   offset += 8;
   return {
     writeUint32: value => {
@@ -3797,7 +3793,6 @@ function getDataView(idx) {
       offset += 4;
     },
     writeBigUint64: value => {
-      console.log('pptest begin trans5')
       dataView.setBigUint64(startPos + offset, BigInt(value), isLittleEndian);
       offset += 8;
     },
@@ -3813,14 +3808,12 @@ function getDataView(idx) {
 
     writePointer(e) {
       if (e) {
-        console.log('pptest begin trans6')
         dataView.setBigUint64(startPos + offset, BigInt(e.__native_ptr__), isLittleEndian);
 
         if (refMap.indexOf(e) < 0) {
           refMap.push(e);
         }
       } else {
-        console.log('pptest begin trans7')
         dataView.setBigUint64(startPos + offset, NULL_PTR, isLittleEndian);
       }
 
