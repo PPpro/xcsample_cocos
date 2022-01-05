@@ -14,8 +14,26 @@
  */
 import { log } from './log_utils'
 import { importMap } from './src/import-map.1b3be'
+import resourceManager from '@ohos.resourceManager';
 declare const require: any;
 declare const System: any;
+
+resourceManager.getResourceManager().then(result => {
+    result.getMedia($r('app.media.test').id).then(media => {
+        // @ts-ignore
+        console.log("kee cocos getMedia buffer = " + String.fromCharCode.apply(null, new Uint8Array(media.buffer)));
+        console.log("kee cocos getMedia byteLength = " + media.byteLength);
+        console.log("kee cocos getMedia byteOffset = " + media.byteOffset);
+        console.log("kee cocos getMedia BYTES_PER_ELEMENT = " + media.BYTES_PER_ELEMENT);
+        console.log("kee cocos getMedia length = " + media.length);
+        console.log("kee cocos media type = " + typeof(media));
+    }).catch(e => {
+        console.log('pptest ' + e.stack)
+    })
+}).catch(err => {
+    console.log("kee cocos getResourceManager error = " + err);
+});
+
 
 // TODO: CommonJS Module Mapping
 const commonJSModuleMap: Record<string, Function> = {
