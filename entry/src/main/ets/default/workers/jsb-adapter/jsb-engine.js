@@ -1995,14 +1995,14 @@ const oldDeviceCreateSwapchainFunc = deviceProto.createSwapchain;
 
 deviceProto.createSwapchain = function (info) {
   console.log('pptest jsb engine createSwapchain')
-  info.windowHandle = window.windowHandler;
+  info.windowHandle = Number(window.windowHandler);
   return oldDeviceCreateSwapchainFunc.call(this, info);
 };
 
 const oldSwapchainInitializeFunc = swapchainProto.initialize;
 
 swapchainProto.initialize = function (info) {
-  info.windowHandle = window.windowHandler;
+  info.windowHandle = Number(window.windowHandler);
   oldSwapchainInitializeFunc.call(this, info);
 };
 
