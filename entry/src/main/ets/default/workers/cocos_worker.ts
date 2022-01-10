@@ -16,7 +16,6 @@
 import worker from '@ohos.worker';
 import nativerender from "libcocos2d.so";
 import { ContextType } from "../common/Constants.ts"
-import '../assets/main.js'
 import { log } from './log_utils';
 import { launchEngine } from './game'
 
