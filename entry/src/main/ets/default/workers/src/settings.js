@@ -1,21 +1,19 @@
 module.exports = {
     "debug": true,
-    "CocosEngine": "3.4.0",
+    "CocosEngine": "3.5.0",
     "designResolution": {
         "width": 960,
         "height": 640,
         "policy": 4
     },
-    "platform": "windows",
+    "platform": "open-harmonyos",
     "exactFitScreen": true,
-    "bundleVers": {
-        "main": "660e5"
-    },
+    "bundleVers": {},
     "subpackages": [],
     "remoteBundles": [],
     "hasResourcesBundle": false,
     "hasStartSceneBundle": false,
-    "launchScene": "db://assets/scene/scene.scene",
+    "launchScene": "db://assets/scene.scene",
     "jsList": [],
     "moduleIds": [],
     "renderPipeline": "",
@@ -55,5 +53,6 @@ module.exports = {
             "restitution": 0.1
         }
     },
-    "scriptPackages": []
-};
+    "scriptPackages": [
+    ]
+}

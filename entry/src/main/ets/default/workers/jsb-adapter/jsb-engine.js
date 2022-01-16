@@ -1795,6 +1795,7 @@ var fsUtils = {
         err = null;
 
     if (encoding === 'utf-8' || encoding === 'utf8') {
+        console.log('pptest readfile ' + filePath)
       content = fs.getStringFromFile(filePath);
     } else {
       content = fs.getDataFromFile(filePath);
@@ -1823,6 +1824,7 @@ var fsUtils = {
   },
 
   readText(filePath, onComplete) {
+      console.log('pptest read text ' + filePath)
     fsUtils.readFile(filePath, 'utf8', onComplete);
   },
 
@@ -1831,6 +1833,7 @@ var fsUtils = {
   },
 
   readJson(filePath, onComplete) {
+      console.log('pptest read json ' + filePath)
     fsUtils.readFile(filePath, 'utf8', function (err, text) {
       var out = null;
 
@@ -2343,7 +2346,8 @@ function downloadBundle(nameOrUrl, options, onComplete) {
     }
   }
 
-  var config = `${url}/cc.config.${version ? version + '.' : ''}json`;
+  // TODO: why is cc.config.json ?
+  var config = `${url}/config.${version ? version + '.' : ''}json`;
   options.__cacheBundleRoot__ = bundleName;
   downloadJson(config, options, function (err, response) {
     if (err) {
@@ -2575,10 +2579,10 @@ cc.assetManager.transformPipeline.append(function (task) {
 var originInit = cc.assetManager.init;
 
 cc.assetManager.init = function (options) {
-    // TODO: assetManager not supported
-//  originInit.call(cc.assetManager, options);
+  originInit.call(cc.assetManager, options);
+  // TODO: jsb downloader not supported
 //  initJsbDownloader(options.jsbDownloaderMaxTasks, options.jsbDownloaderTimeout);
-//  cacheManager.init();
+  cacheManager.init();
 };
 
 },{"./jsb-cache-manager":4,"./jsb-fs-utils":8}],12:[function(require,module,exports){
