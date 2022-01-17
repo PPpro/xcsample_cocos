@@ -38,7 +38,7 @@ resourceManager.getResourceManager().then(result => {
 // TODO: CommonJS Module Mapping
 const commonJSModuleMap: Record<string, Function> = {
     '/src/application.79b93.js' () { require('./src/application.79b93.js'); },
-    '/src/cocos-js/cc.494d9.js' () { require('./src/cocos-js/cc.494d9.js'); },
+    '/src/cocos-js/cc.js' () { require('./src/cocos-js/cc.js'); },
 }
 function loadModule (name: string) {
     const moduleExecutor = commonJSModuleMap[name];

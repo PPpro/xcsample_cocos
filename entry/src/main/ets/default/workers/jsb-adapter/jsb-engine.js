@@ -2582,7 +2582,7 @@ cc.assetManager.init = function (options) {
   originInit.call(cc.assetManager, options);
   // TODO: jsb downloader not supported
 //  initJsbDownloader(options.jsbDownloaderMaxTasks, options.jsbDownloaderTimeout);
-  cacheManager.init();
+//  cacheManager.init();
 };
 
 },{"./jsb-cache-manager":4,"./jsb-fs-utils":8}],12:[function(require,module,exports){
