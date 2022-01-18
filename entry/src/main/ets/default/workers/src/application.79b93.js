@@ -43,6 +43,8 @@ System.register([], function (_export, _context) {
           log('onGameStarted')
           cc.game.onStart = onGameStarted.bind(null, cc, settings);
           onGameStarted(cc, settings);
+        }).catch((e) => {
+          console.log('pptest error in Promise ' + e)
         });
       });
     }
@@ -52,7 +54,6 @@ System.register([], function (_export, _context) {
     }
 
     function loadAssetBundle(hasResourcesBundle, hasStartSceneBundle) {
-      let promise = Promise.resolve();
       const {
         MAIN,
         RESOURCES,
@@ -64,16 +65,23 @@ System.register([], function (_export, _context) {
         bundleRoot.push(START_SCENE);
       }
 
-      return bundleRoot.reduce((pre, name) => pre.then(() => loadBundle(name)), Promise.resolve());
+      console.log('pptest bundleRoot count ' + bundleRoot.length)
+      return bundleRoot.reduce(
+          (pre, name) => pre.then(() => loadBundle(name)),
+          Promise.resolve()
+        );
     }
 
     function loadBundle(name) {
       return new Promise((resolve, reject) => {
+        console.log('pptest load loadbundle1 ' +  name)
         cc.assetManager.loadBundle(name, (err, bundle) => {
+          console.log('pptest load loadbundle2 ' +  name)
           if (err) {
             return reject(err);
           }
 
+          console.log('pptest load loadbundle3 ' +  name)
           resolve(bundle);
         });
       });

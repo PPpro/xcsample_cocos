@@ -1795,7 +1795,6 @@ var fsUtils = {
         err = null;
 
     if (encoding === 'utf-8' || encoding === 'utf8') {
-        console.log('pptest readfile ' + filePath)
       content = fs.getStringFromFile(filePath);
     } else {
       content = fs.getDataFromFile(filePath);
@@ -1804,6 +1803,8 @@ var fsUtils = {
     if (!content) {
       err = new Error(`Read file failed: path: ${filePath}`);
       cc.warn(err.message);
+    } else {
+      console.log('pptest readfile  success ' + filePath + ' ' + content)
     }
 
     onComplete && onComplete(err, content);
@@ -2182,13 +2183,16 @@ const maxRetryCountFromBreakpoint = 5;
 const loadedScripts = {};
 
 function downloadScript(url, options, onComplete) {
+  url = 'workers/' + url;
   if (typeof options === 'function') {
     onComplete = options;
     options = null;
   }
 
   if (loadedScripts[url]) return onComplete && onComplete();
+  console.log('pptest download script1 ' + url)
   download(url, function (src, options, onComplete) {
+    console.log('pptest download script2 ' + url)
     window.require(src);
 
     loadedScripts[url] = true;
@@ -2330,34 +2334,43 @@ function downloadJson(url, options, onComplete) {
 }
 
 function downloadBundle(nameOrUrl, options, onComplete) {
+  console.log('pptest download bundle 1' + nameOrUrl)
   let bundleName = cc.path.basename(nameOrUrl);
   var version = options.version || downloader.bundleVers[bundleName];
   let url;
 
   if (REGEX.test(nameOrUrl) || nameOrUrl.startsWith(getUserDataPath())) {
+    console.log('pptest download bundle 2' + nameOrUrl)
     url = nameOrUrl;
     cacheManager.makeBundleFolder(bundleName);
   } else {
+    console.log('pptest download bundle 3' + nameOrUrl)
     if (downloader.remoteBundles.indexOf(bundleName) !== -1) {
+      console.log('pptest download bundle 4' + nameOrUrl)
       url = `${downloader.remoteServerAddress}remote/${bundleName}`;
       cacheManager.makeBundleFolder(bundleName);
     } else {
+      console.log('pptest download bundle 5' + nameOrUrl)
       url = `assets/${bundleName}`;
     }
   }
-
+  
+  console.log('pptest download bundle 6' + nameOrUrl)
   // TODO: why is cc.config.json ?
   var config = `${url}/config.${version ? version + '.' : ''}json`;
   options.__cacheBundleRoot__ = bundleName;
   downloadJson(config, options, function (err, response) {
+    console.log('pptest download bundle 7' + nameOrUrl)
     if (err) {
       return onComplete(err, null);
     }
-
+    
     let out = response;
     out && (out.base = url + '/');
     var js = `${url}/index.${version ? version + '.' : ''}${out.encrypted ? 'jsc' : `js`}`;
+    console.log('pptest download bundle 8' + nameOrUrl)
     downloadScript(js, options, function (err) {
+      console.log('pptest download bundle 9' + nameOrUrl)
       if (err) {
         return onComplete(err, null);
       }
