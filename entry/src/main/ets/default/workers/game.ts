@@ -45,6 +45,12 @@ function loadModule (name: string) {
     moduleExecutor?.();
 }
 
+// @ts-ignore
+const onTouch = () => new Promise<void>(resolve => jsb.onTouchStart = function () {
+    log('promise onTouch')
+    resolve();
+})
+
 export function launchEngine (): Promise<void> {
     return new Promise((resolve, reject) => {
         const systemReady = require('./jsb-adapter/sys-ability-polyfill.js');
@@ -72,27 +78,31 @@ export function launchEngine (): Promise<void> {
                     fetchWasm: (url: string) => url,
                 }).then((application) => {
                     log('created application', application)
-                    return application.import('cc').then((cc) => {
-                        log('importing cc');
-                        require('./jsb-adapter/jsb-engine.js');
-                        cc.macro.CLEANUP_IMAGE_CACHE = false;
-                    }).then(() => {
-                        log('start application');
-                        return application.start({
-                            // @ts-ignore
-                            settings: window._CCSettings,
-                            findCanvas: () => {
+                    return onTouch().then(() => {
+                        log('onTouch')
+                        application.import('cc').then((cc) => {
+                            log('importing cc');
+                            require('./jsb-adapter/jsb-engine.js');
+                            cc.macro.CLEANUP_IMAGE_CACHE = false;
+                        }).then(() => {
+                            log('start application');
+                            return application.start({
                                 // @ts-ignore
-                                var container = document.createElement('div');
-                                // @ts-ignore
-                                var frame = document.documentElement;
-                                // @ts-ignore
-                                var canvas = window.__canvas;
-                                // @ts-ignore
-                                return { frame, canvas, container };
-                            },
+                                settings: window._CCSettings,
+                                findCanvas: () => {
+                                    // @ts-ignore
+                                    var container = document.createElement('div');
+                                    // @ts-ignore
+                                    var frame = document.documentElement;
+                                    // @ts-ignore
+                                    var canvas = window.__canvas;
+                                    // @ts-ignore
+                                    return { frame, canvas, container };
+                                },
+                            });
                         });
-                    });
+
+                    })
                 });
             }).catch((e: any) => {
                 log('imported failed', e.message, e.stack)
