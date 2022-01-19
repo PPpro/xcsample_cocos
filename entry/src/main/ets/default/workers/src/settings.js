@@ -54,5 +54,6 @@ module.exports = {
         }
     },
     "scriptPackages": [
+        "./src/chunks/bundle.js"
     ]
 }

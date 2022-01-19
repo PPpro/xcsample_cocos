@@ -1,0 +1,9 @@
+adb push ./assets /data/data/ohos.example.test/files/assets
+
+adb shell ls /data/data/ohos.example.test/files/assets
+
+adb shell setenforce 0
+
+adb push ./assets /sdcard/cocos/xcsample
+
+adb shell ls /sdcard/cocos/xcsample

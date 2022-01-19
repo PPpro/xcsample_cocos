@@ -39,8 +39,10 @@ declare const System: any;
 const commonJSModuleMap: Record<string, Function> = {
     '/src/application.79b93.js' () { require('./src/application.79b93.js'); },
     '/src/cocos-js/cc.js' () { require('./src/cocos-js/cc.js'); },
+    '/src/src/chunks/bundle.js' () { require('./src/chunks/bundle.js') },
+    'workers/assets/main/index.js' () { require('./assets/main/index.js'); }
 }
-function loadModule (name: string) {
+export function loadModule (name: string) {
     const moduleExecutor = commonJSModuleMap[name];
     moduleExecutor?.();
 }
