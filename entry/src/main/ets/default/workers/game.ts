@@ -39,7 +39,9 @@ declare const System: any;
 const commonJSModuleMap: Record<string, Function> = {
     '/src/application.79b93.js' () { require('./src/application.79b93.js'); },
     '/src/cocos-js/cc.js' () { require('./src/cocos-js/cc.js'); },
-    '/src/src/chunks/bundle.js' () { require('./src/chunks/bundle.js') },
+    '/src/chunks/bundle.js' () { require('./src/chunks/bundle.js') },
+    '/src/cocos-js/wait-for-ammo-instantiation.js' () { require('./src/cocos-js/wait-for-ammo-instantiation.js') },
+    '/src/cocos-js/instantiated-475a4f3e.js' () { require('./src/cocos-js/instantiated-475a4f3e.js') },
     'workers/assets/main/index.js' () { require('./assets/main/index.js'); }
 }
 export function loadModule (name: string) {
@@ -111,6 +113,8 @@ export function launchEngine (): Promise<void> {
                                     // @ts-ignore
                                     return { frame, canvas, container };
                                 },
+                            }).catch((e: any) => {
+                                log('imported failed', e.message, e.stack)
                             });
                         });
 

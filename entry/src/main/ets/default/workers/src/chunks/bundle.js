@@ -6,8 +6,24 @@ System.register("chunks:///_virtual/_rollupPluginModLoBabelHelpers.js", [], func
     execute: function () {
       exports({
         applyDecoratedDescriptor: _applyDecoratedDescriptor,
+        defineProperty: _defineProperty,
         initializerDefineProperty: _initializerDefineProperty
       });
+
+      function _defineProperty(obj, key, value) {
+        if (key in obj) {
+          Object.defineProperty(obj, key, {
+            value: value,
+            enumerable: true,
+            configurable: true,
+            writable: true
+          });
+        } else {
+          obj[key] = value;
+        }
+
+        return obj;
+      }
 
       function _initializerDefineProperty(target, property, descriptor, context) {
         if (!descriptor) return;

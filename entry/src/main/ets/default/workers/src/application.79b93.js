@@ -9,6 +9,11 @@ System.register([], function (_export, _context) {
   }) {
     // NOTE: before here we shall not import any module!
     let promise = Promise.resolve();
+    promise = promise.then(() => topLevelImport('wait-for-ammo-instantiation')).then(({
+          default: waitForAmmoInstantiation
+        }) => {
+      return waitForAmmoInstantiation(fetchWasm(''));
+    });
     return promise.then(() => {
       return {
         start,

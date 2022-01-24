@@ -2,18 +2,18 @@ module.exports = {
     "debug": true,
     "CocosEngine": "3.5.0",
     "designResolution": {
-        "width": 960,
-        "height": 640,
+        "width": 720,
+        "height": 1280,
         "policy": 4
     },
-    "platform": "open-harmonyos",
+    "platform": "windows",
     "exactFitScreen": true,
     "bundleVers": {},
     "subpackages": [],
     "remoteBundles": [],
     "hasResourcesBundle": false,
     "hasStartSceneBundle": false,
-    "launchScene": "db://assets/scene.scene",
+    "launchScene": "db://assets/scene/airplane.scene",
     "jsList": [],
     "moduleIds": [],
     "renderPipeline": "",
@@ -35,7 +35,7 @@ module.exports = {
     },
     "customJointTextureLayouts": [],
     "physics": {
-        "physicsEngine": "",
+        "physicsEngine": "physics-ammo",
         "gravity": {
             "x": 0,
             "y": -10,
@@ -51,9 +51,39 @@ module.exports = {
             "rollingFriction": 0.1,
             "spinningFriction": 0.1,
             "restitution": 0.1
+        },
+        "collisionGroups": [
+            {
+                "index": 1,
+                "name": "SELF_PLAYER"
+            },
+            {
+                "index": 2,
+                "name": "ENEMY_PLAYER"
+            },
+            {
+                "index": 3,
+                "name": "SELF_BULLET"
+            },
+            {
+                "index": 4,
+                "name": "ENEMY_BULET"
+            },
+            {
+                "index": 5,
+                "name": "BULLET_PROP"
+            }
+        ],
+        "collisionMatrix": {
+            "0": 1,
+            "1": 52,
+            "2": 10,
+            "3": 4,
+            "4": 2,
+            "5": 2
         }
     },
     "scriptPackages": [
-        "./src/chunks/bundle.js"
+        "./chunks/bundle.js"
     ]
 }
