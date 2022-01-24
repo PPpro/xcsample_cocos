@@ -4,13 +4,13 @@ apply plugin: 'com.huawei.ohos.decctest'
 ohos {
     signingConfigs {
         debug {
-            storeFile file('C:\\Users\\l\\.ohos\\config\\auto_debug_test_30086000539966845.p12')
-            storePassword '00000018AD871E58EAD5B11B0FD9029657DB51723987CB72F38E741A522F84BC8DD023D1790D184A'
+            storeFile file('C:\\Users\\cocos\\Desktop\\pp_workspace\\config\\auto_debug_test_30086000539966845.p12')
+            storePassword '0000001806178056120BC8CD41495C15E0AE801975C67C572E5C19E83E5AB9C0810A78B86D601C73'
             keyAlias = 'debugKey'
-            keyPassword '0000001899BC50F05A04B37167217D0C39058DEBCD54069E8ED45A45C4E012560472130C5A249928'
+            keyPassword '0000001846CF0B15ACFDB201C358AD2EA3FAFE250071F480C6EB01D4BCBCB36DC302ECB86953F28B'
             signAlg = 'SHA256withECDSA'
-            profile file('C:\\Users\\l\\.ohos\\config\\auto_debug_test_30086000539966845.p7b')
-            certpath file('C:\\Users\\l\\.ohos\\config\\auto_debug_test_30086000539966845.cer')
+            profile file('C:\\Users\\cocos\\Desktop\\pp_workspace\\config\\auto_debug_test_30086000539966845.p7b')
+            certpath file('C:\\Users\\cocos\\Desktop\\pp_workspace\\config\\auto_debug_test_30086000539966845.cer')
         }
     }
     compileSdkVersion 7
