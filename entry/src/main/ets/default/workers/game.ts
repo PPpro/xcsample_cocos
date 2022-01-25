@@ -14,7 +14,7 @@
  */
 import { log } from './log_utils'
 import { importMap } from './src/import-map.1b3be'
-import resourceManager from '@ohos.resourceManager';
+// import resourceManager from '@ohos.resourceManager';
 declare const require: any;
 declare const System: any;
 
@@ -92,64 +92,34 @@ export function launchEngine (): Promise<void> {
                     fetchWasm: (url: string) => url,
                 }).then((application) => {
                     log('created application', application)
-                    return onTouch().then(() => {
-                        log('onTouch')
-                        application.import('cc').then((cc) => {
-                            log('importing cc');
-                            require('./jsb-adapter/jsb-engine.js');
-                            cc.macro.CLEANUP_IMAGE_CACHE = false;
-                        }).then(() => {
-                            log('start application');
-                            return application.start({
+                    return application.import('cc').then((cc) => {
+                        log('importing cc');
+                        require('./jsb-adapter/jsb-engine.js');
+                        cc.macro.CLEANUP_IMAGE_CACHE = false;
+                    }).then(() => {
+                        log('start application');
+                        return application.start({
+                            // @ts-ignore
+                            settings: window._CCSettings,
+                            findCanvas: () => {
                                 // @ts-ignore
-                                settings: window._CCSettings,
-                                findCanvas: () => {
-                                    // @ts-ignore
-                                    var container = document.createElement('div');
-                                    // @ts-ignore
-                                    var frame = document.documentElement;
-                                    // @ts-ignore
-                                    var canvas = window.__canvas;
-                                    // @ts-ignore
-                                    return { frame, canvas, container };
-                                },
-                            }).catch((e: any) => {
-                                log('imported failed', e.message, e.stack)
-                            });
+                                var container = document.createElement('div');
+                                // @ts-ignore
+                                var frame = document.documentElement;
+                                // @ts-ignore
+                                var canvas = window.__canvas;
+                                // @ts-ignore
+                                return { frame, canvas, container };
+                            },
+                        }).catch((e: any) => {
+                            log('imported failed', e.message, e.stack)
                         });
-
-                    })
+                    });
                 });
             }).catch((e: any) => {
                 log('imported failed', e.message, e.stack)
                 reject(e);
             })
-
-
-            //            System.import('./src/application.79b93.js').then(({ createApplication }) => {
-            //                return createApplication({
-            //                    loadJsListFile: (url) => require(url),
-            //                    fetchWasm: (url) => url,
-            //                });
-            //            })
-            //            .then((application) => {
-            //            return application.import('cc').then((cc) => {
-            //                require('jsb-adapter/jsb-engine.js');
-            //                cc.macro.CLEANUP_IMAGE_CACHE = false;
-            //            }).then(() => {
-            //                return application.start({
-            //                    settings: window._CCSettings,
-            //                    findCanvas: () => {
-            //                        var container = document.createElement('div');
-            //                        var frame = document.documentElement;
-            //                        var canvas = window.__canvas;
-            //                        return { frame, canvas, container };
-            //                    },
-            //                });
-            //            });
-            //            }).catch((err) => {
-            //                console.error(err.toString());
-            //            });
         });
     })
 }

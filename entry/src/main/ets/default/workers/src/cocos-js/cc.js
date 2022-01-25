@@ -8704,7 +8704,7 @@ System.register(['./instantiated-8e03a81e.js'], function (exports) {
 
               static loadNative(url) {
                 return new Promise((resolve, reject) => {
-                  if (systemInfo.platform === Platform.WIN32) {
+                  if (true) {
                     resolve(url);
                   } else {
                     audioEngine.preload(url, isSuccess => {
