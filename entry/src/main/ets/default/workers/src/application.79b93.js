@@ -49,7 +49,7 @@ System.register([], function (_export, _context) {
           cc.game.onStart = onGameStarted.bind(null, cc, settings);
           onGameStarted(cc, settings);
         }).catch((e) => {
-          console.log('pptest error in Promise ' + e)
+          console.log('pptest error in Promise ' + e.stack)
         });
       });
     }

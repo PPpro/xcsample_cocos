@@ -41,7 +41,7 @@ const commonJSModuleMap: Record<string, Function> = {
     '/src/cocos-js/cc.js' () { require('./src/cocos-js/cc.js'); },
     '/src/chunks/bundle.js' () { require('./src/chunks/bundle.js') },
     '/src/cocos-js/wait-for-ammo-instantiation.js' () { require('./src/cocos-js/wait-for-ammo-instantiation.js') },
-    '/src/cocos-js/instantiated-475a4f3e.js' () { require('./src/cocos-js/instantiated-475a4f3e.js') },
+    '/src/cocos-js/instantiated-8e03a81e.js' () { require('./src/cocos-js/instantiated-8e03a81e.js') },
     'workers/assets/main/index.js' () { require('./assets/main/index.js'); }
 }
 export function loadModule (name: string) {

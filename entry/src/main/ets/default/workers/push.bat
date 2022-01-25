@@ -1,0 +1,1 @@
+adb push ./assets /data/data/ohos.example.test/files/assets
